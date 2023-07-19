@@ -63,12 +63,18 @@ export default function Main() {
               if (newHP <= 0) {
                 setTimeout(() => {
                   currentSlimeIndexRef.current++;
+                }, 500);
+                setTimeout(() => {
                   comboRef.current = 0;
                   if (currentSlimeIndexRef.current >= Slimes.length) {
                     setGameState("end");
                   } else {
-                    setEnemyMaxHealth(Slimes[currentSlimeIndexRef.current].health);
-                    setEnemyCurrentHealth(Slimes[currentSlimeIndexRef.current].health);
+                    setEnemyMaxHealth(
+                      Slimes[currentSlimeIndexRef.current].health
+                    );
+                    setEnemyCurrentHealth(
+                      Slimes[currentSlimeIndexRef.current].health
+                    );
                     setCards(null);
                     setCombatState([0, i + 1]);
                   }
@@ -118,7 +124,9 @@ export default function Main() {
       ></img>
 
       <div className={styles.topBarContainer}>
-        <p className={styles.enemyName}>{Slimes[currentSlimeIndexRef.current].name}</p>
+        <p className={styles.enemyName}>
+          {Slimes[currentSlimeIndexRef.current].name}
+        </p>
         <div className={styles.enemyHealthBar}>
           <div
             className={styles.enemyHealthBarFill}
