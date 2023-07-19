@@ -63,19 +63,17 @@ export default function Main() {
               if (newHP <= 0) {
                 setTimeout(() => {
                   currentSlimeIndexRef.current++;
-                }, 500);
-                setTimeout(() => {
                   comboRef.current = 0;
                   if (currentSlimeIndexRef.current >= Slimes.length) {
                     setGameState("end");
                   } else {
+                    setCards(null);
                     setEnemyMaxHealth(
                       Slimes[currentSlimeIndexRef.current].health
                     );
                     setEnemyCurrentHealth(
                       Slimes[currentSlimeIndexRef.current].health
                     );
-                    setCards(null);
                     setCombatState([0, i + 1]);
                   }
                 }, 1000);
