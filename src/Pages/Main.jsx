@@ -120,7 +120,7 @@ export default function Main() {
               combatState[1] === 1
                 ? "translate(-8%, 0%)"
                 : "translate(-108%, 0%)",
-            top: combatState[1] === 1 ? "43%" : "65%",
+            top: combatState[1] === 1 ? "38%" : "65%",
             transition:
               combatState[1] === 1
                 ? "transform 0.5s ease-out, top 0.5s ease-in"
@@ -148,7 +148,7 @@ export default function Main() {
               combatState[1] === 2
                 ? "translate(-92%, 0%)"
                 : "translate(8%, 0%)",
-            top: combatState[1] === 2 ? "43%" : "65%",
+            top: combatState[1] === 2 ? "38%" : "65%",
             transition:
               combatState[1] === 2
                 ? "transform 0.5s ease-out, top 0.5s ease-in"
