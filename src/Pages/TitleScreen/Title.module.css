@@ -1,0 +1,127 @@
+.LazyModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80rem;
+  height: 50rem;
+  transform: translate(-50%, -50%);
+
+  z-index: 100;
+
+  background-color: rgb(255, 255, 255);
+  border: 1rem black solid;
+}
+
+.LazyModalBack {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 99;
+
+  top: 0;
+  left: 0;
+
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.closeButton {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  width: 3rem;
+  height: 3rem;
+  font-size: 2rem;
+  text-align: center;
+  background-color: red;
+  cursor: pointer;
+}
+
+.descTitle {
+  font-size: 4rem;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.desc {
+  font-size: 2.25rem;
+  margin-left: 2.25rem;
+}
+
+.titleRoot {
+  width: 100vw;
+  height: 100vh;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 7vw;
+  color: white;
+  text-shadow: 0.35vw 0.3vw 0vw rgba(0, 0, 0, 0.5);
+  text-align: center;
+
+  margin-top: 14vh;
+}
+
+.gameList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 16vw;
+  gap: 3.5vh;
+}
+
+.gameList li {
+  width: 100%;
+}
+
+.gameListButton {
+  font-size: 2.5vw;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+
+  z-index: 10;
+
+  color: white;
+  text-shadow: 0vw 0vw 0.3vw rgba(255, 255, 0, 0.5);
+
+  position: relative;
+}
+
+.gameListButton:hover:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  z-index: -1;
+
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 0, 0),
+    rgba(233, 226, 13, 0.136),
+    rgba(255, 255, 0, 0)
+  );
+}
+
+.credits {
+  font-size: 1.25vw;
+  text-align: center;
+  margin-bottom: 5vh;
+
+  color: white;
+}

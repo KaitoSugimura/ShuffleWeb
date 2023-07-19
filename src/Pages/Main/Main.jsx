@@ -1,11 +1,14 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import styles from "./Main.module.css";
 import shuffle from "./Shuffle";
 import Card from "./Card";
 import slime1 from "/Enemies/defaultSlime.gif";
 import Background from "./Graphics/Background";
+import { GameContext } from "../../GameContext";
 
 export default function Main() {
+  const { setGameState } = useContext(GameContext);
+
   const getNewSplitShuffleArrays = () => {
     const arr = shuffle(10);
     return [arr.slice(0, 5), arr.slice(5, 10)];
@@ -46,21 +49,32 @@ export default function Main() {
           });
           return sum;
         };
+        const handleOnClick = (event, i) => {
+          event.preventDefault();
+          const sum = findSum(i);
+          if (sum > 27) comboRef.current++;
+          else comboRef.current = 0;
+          const damage = Math.ceil(sum * getDamageMultiplier());
+          setCombatState([i + 2, i + 1]);
+          setTimeout(() => {
+            setEnemyCurrentHealth((prev) => {
+              let newHP = prev - damage;
+              if (newHP <= 0) {
+                setTimeout(() => {
+                  setGameState("end");
+                }, 500);
+              }
+              return newHP;
+            });
+            setCombatState([0, i + 1, damage]);
+          }, 500);
+        };
         return (
           <div className={styles.bottomCenter}>
             <button
               className={`${styles.selectionButton} ${styles.selectionButtonLeft}`}
               onClick={(event) => {
-                event.preventDefault();
-                const sum = findSum(0);
-                if (sum > 27) comboRef.current++;
-                else comboRef.current = 0;
-                const damage = Math.ceil(sum * getDamageMultiplier());
-                setCombatState([2, 1]);
-                setTimeout(() => {
-                  setEnemyCurrentHealth((prev) => prev - damage);
-                  setCombatState([0, 1, damage]);
-                }, 500);
+                handleOnClick(event, 0);
               }}
             >
               Left
@@ -68,16 +82,7 @@ export default function Main() {
             <button
               className={`${styles.selectionButton} ${styles.selectionButtonRight}`}
               onClick={(event) => {
-                event.preventDefault();
-                const sum = findSum(1);
-                if (sum > 27) comboRef.current++;
-                else comboRef.current = 0;
-                const damage = Math.ceil(sum * getDamageMultiplier());
-                setCombatState([3, 2]);
-                setTimeout(() => {
-                  setEnemyCurrentHealth((prev) => prev - damage);
-                  setCombatState([0, 2, damage]);
-                }, 500);
+                handleOnClick(event, 1);
               }}
             >
               Right
@@ -123,8 +128,12 @@ export default function Main() {
 
       {comboRef.current > 0 && (
         <div className={styles.comboCont}>
-          <p className={styles.comboText}><span>{comboRef.current}</span> Combo</p>
-          <p className={styles.damageText}><span>x{getDamageMultiplier()}</span> Damage!</p>
+          <p className={styles.comboText}>
+            <span>{comboRef.current}</span> Combo
+          </p>
+          <p className={styles.damageText}>
+            <span>x{getDamageMultiplier()}</span> Damage!
+          </p>
         </div>
       )}
 

@@ -1,0 +1,33 @@
+.endRoot {
+  width: 100vw;
+  height: 100vh;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 7vw;
+  color: white;
+  text-shadow: 0.35vw 0.3vw 0vw rgba(0, 0, 0, 0.5);
+  text-align: center;
+
+  margin-top: 14vh;
+}
+
+.returnButton{
+   margin-bottom: 35vh;
+   font-size: 1.5vw;
+    color: white;
+    border: none;
+    padding: 1vh 1vw;
+    background-color: rgba(0, 0, 0, 0.542);
+
+    cursor: pointer;
+}
