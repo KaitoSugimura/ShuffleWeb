@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import styles from "./End.module.css";
-import settingBG from "/Images/Title.png";
+import settingBG from "/Images/Title.jpg";
 import { GameContext } from "../../GameContext";
 
 export default function End() {

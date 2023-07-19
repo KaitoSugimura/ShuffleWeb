@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "./Background.module.css";
-import settingBG from "/Images/BackgroundField.png";
+import settingBG from "/Images/BackgroundField.jpg";
 
 export default function Background() {
   const [tiltValues, setTiltValues] = useState({ x: 0, y: 0 });

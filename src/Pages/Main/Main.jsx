@@ -2,9 +2,9 @@ import { useContext, useRef, useState } from "react";
 import styles from "./Main.module.css";
 import shuffle from "./Shuffle";
 import Card from "./Card";
-import slime1 from "/Enemies/defaultSlime.gif";
 import Background from "./Graphics/Background";
 import { GameContext } from "../../GameContext";
+import Slimes from "./Data/SlimeLineup";
 
 export default function Main() {
   const { setGameState } = useContext(GameContext);
@@ -16,7 +16,8 @@ export default function Main() {
   const [cards, setCards] = useState(null);
   const [combatState, setCombatState] = useState([0, 0]); // Switch to using Enum later
 
-  const [enemyMaxHealth, setEnemyMaxHealth] = useState(500);
+  const currentSlimeIndexRef = useRef(0);
+  const [enemyMaxHealth, setEnemyMaxHealth] = useState(Slimes[0].health);
   const [enemyCurrentHealth, setEnemyCurrentHealth] = useState(enemyMaxHealth);
 
   const comboRef = useRef(0);
@@ -38,7 +39,7 @@ export default function Main() {
               setCombatState([1, 0]);
             }}
           >
-            Roll Battle
+            Roll Attack
           </button>
         );
       case 1:
@@ -61,12 +62,23 @@ export default function Main() {
               let newHP = prev - damage;
               if (newHP <= 0) {
                 setTimeout(() => {
-                  setGameState("end");
-                }, 500);
+                  currentSlimeIndexRef.current++;
+                  comboRef.current = 0;
+                  if (currentSlimeIndexRef.current >= Slimes.length) {
+                    setGameState("end");
+                  } else {
+                    setEnemyMaxHealth(Slimes[currentSlimeIndexRef.current].health);
+                    setEnemyCurrentHealth(Slimes[currentSlimeIndexRef.current].health);
+                    setCards(null);
+                    setCombatState([0, i + 1]);
+                  }
+                }, 1000);
+                setCombatState([i + 2, i + 1, damage]);
+              } else {
+                setCombatState([0, i + 1, damage]);
               }
               return newHP;
             });
-            setCombatState([0, i + 1, damage]);
           }, 500);
         };
         return (
@@ -97,10 +109,16 @@ export default function Main() {
   return (
     <div className={styles.mainRoot}>
       <Background />
-      <img src={slime1} className={styles.enemyImage}></img>
+
+      <img
+        src={Slimes[currentSlimeIndexRef.current].image}
+        className={`${styles.enemyImage} ${
+          enemyCurrentHealth <= 0 ? styles.deathAnim : ""
+        }`}
+      ></img>
 
       <div className={styles.topBarContainer}>
-        <p className={styles.enemyName}>Normal Slime</p>
+        <p className={styles.enemyName}>{Slimes[currentSlimeIndexRef.current].name}</p>
         <div className={styles.enemyHealthBar}>
           <div
             className={styles.enemyHealthBarFill}

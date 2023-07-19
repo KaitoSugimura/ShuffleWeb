@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import styles from "./Title.module.css";
-import settingBG from "/Images/Title.png";
+import settingBG from "/Images/Title.jpg";
 import { GameContext } from "../../GameContext";
 
 export default function Title() {
@@ -29,7 +29,7 @@ export default function Title() {
 
             <p className={styles.descTitle}>How To Play</p>
             <p className={styles.desc}>
-              1. Start by pressing the Roll Battle button.
+              1. Start by pressing the Roll Attack button.
               <br />
               2. This will roll 10 numbers from 1 to 10 in random order.
               <br />
@@ -50,7 +50,9 @@ export default function Title() {
         }}
         className={styles.titleRoot}
       >
+        <div>
         <h1 className={styles.title}>Shuffle Battle</h1>
+        <h1 className={styles.subtitle}>Made for PureWeb TakeHome task</h1></div>
         <ul className={styles.gameList}>
           <li>
             <button

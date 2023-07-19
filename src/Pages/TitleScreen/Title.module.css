@@ -68,8 +68,16 @@
   color: white;
   text-shadow: 0.35vw 0.3vw 0vw rgba(0, 0, 0, 0.5);
   text-align: center;
-
+  line-height: 1.1;
   margin-top: 14vh;
+}
+
+.subtitle{
+  font-size: 1.75vw;
+  color: rgb(227, 176, 47);
+  text-shadow: 0.1vw 0.1vw 0vw rgba(0, 0, 0, 0.5);
+  text-align: end;
+  margin-right: 3vw;
 }
 
 .gameList {
