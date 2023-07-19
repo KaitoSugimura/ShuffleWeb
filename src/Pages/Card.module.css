@@ -1,11 +1,9 @@
-.cardRoot{
-  width: 6.5vw;
-  height: 6.5vw;
+.cardRoot {
   font-size: 4vw;
 
-  background-color: rgba(0, 0, 0, 0.445);
-  border: 0.3vw solid rgba(43, 43, 43, 0.13);
+  background-color: rgba(243, 243, 243, 0.895);
+  border: 0.3vw solid rgba(43, 43, 43, 0.496);
   background-clip: padding-box;
-  
+
   text-align: center;
 }
