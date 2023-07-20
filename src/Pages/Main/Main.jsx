@@ -1,30 +1,62 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./Main.module.css";
 import shuffle from "./Shuffle";
 import Card from "./Card";
 import Background from "./Graphics/Background";
 import { GameContext } from "../../GameContext";
 import Slimes from "./Data/SlimeLineup";
+import Enemy from "./Enemy/Enemy";
 
 export default function Main() {
   const { setGameState } = useContext(GameContext);
+  const enemyRef = useRef(null);
+
+  const [cards, setCards] = useState(null);
+  const [combatState, setCombatState] = useState([0, 0]); // Switch to using Enum later
+  const iRef = useRef(0);
+
+  const currentSlimeIndexRef = useRef(0);
+  const comboRef = useRef(0);
+
+    // Initial set
+    useEffect(() => {
+      if (enemyRef.current) {
+        enemyRef.current.setEnemy(
+          Slimes[0].image,
+          Slimes[0].name,
+          Slimes[0].health
+        );
+      }
+    }, []);
 
   const getNewSplitShuffleArrays = () => {
     const arr = shuffle(10);
     return [arr.slice(0, 5), arr.slice(5, 10)];
   };
-  const [cards, setCards] = useState(null);
-  const [combatState, setCombatState] = useState([0, 0]); // Switch to using Enum later
-
-  const currentSlimeIndexRef = useRef(0);
-  const [enemyMaxHealth, setEnemyMaxHealth] = useState(Slimes[0].health);
-  const [enemyCurrentHealth, setEnemyCurrentHealth] = useState(enemyMaxHealth);
-
-  const comboRef = useRef(0);
 
   const getDamageMultiplier = () => {
     if (comboRef.current === 0) return 1;
     return 1 + 0.5 * (comboRef.current - 1);
+  };
+
+  const onEnemyDeath = () => {
+    currentSlimeIndexRef.current++;
+    comboRef.current = 0;
+    if (currentSlimeIndexRef.current >= Slimes.length) {
+      setGameState("end");
+    } else {
+      setCards(null);
+      enemyRef.current.setEnemy(
+        Slimes[currentSlimeIndexRef.current].image,
+        Slimes[currentSlimeIndexRef.current].name,
+        Slimes[currentSlimeIndexRef.current].health
+      );
+      setCombatState([0, 0]);
+    }
+  };
+
+  const enemyOnTakeDamage = () => {
+    setCombatState([0, iRef.current + 0]);
   };
 
   const getActionComponent = () => {
@@ -43,46 +75,18 @@ export default function Main() {
           </button>
         );
       case 1:
-        const findSum = (i) => {
+        const handleOnClick = (event, i) => {
+          event.preventDefault();
           let sum = 0;
           cards[i].forEach((card) => {
             sum += card;
           });
-          return sum;
-        };
-        const handleOnClick = (event, i) => {
-          event.preventDefault();
-          const sum = findSum(i);
           if (sum > 27) comboRef.current++;
           else comboRef.current = 0;
-          const damage = Math.ceil(sum * getDamageMultiplier());
+
           setCombatState([i + 2, i + 1]);
           setTimeout(() => {
-            setEnemyCurrentHealth((prev) => {
-              let newHP = prev - damage;
-              if (newHP <= 0) {
-                setTimeout(() => {
-                  currentSlimeIndexRef.current++;
-                  comboRef.current = 0;
-                  if (currentSlimeIndexRef.current >= Slimes.length) {
-                    setGameState("end");
-                  } else {
-                    setCards(null);
-                    setEnemyMaxHealth(
-                      Slimes[currentSlimeIndexRef.current].health
-                    );
-                    setEnemyCurrentHealth(
-                      Slimes[currentSlimeIndexRef.current].health
-                    );
-                    setCombatState([0, i + 1]);
-                  }
-                }, 1000);
-                setCombatState([i + 2, i + 1, damage]);
-              } else {
-                setCombatState([0, i + 1, damage]);
-              }
-              return newHP;
-            });
+            enemyRef.current.takeDamage(Math.ceil(sum * getDamageMultiplier()));
           }, 500);
         };
         return (
@@ -110,45 +114,16 @@ export default function Main() {
     }
   };
 
+
   return (
     <div className={styles.mainRoot}>
       <Background />
 
-      <img
-        src={Slimes[currentSlimeIndexRef.current].image}
-        className={`${styles.enemyImage} ${
-          enemyCurrentHealth <= 0 ? styles.deathAnim : ""
-        }`}
-      ></img>
-
-      <div className={styles.topBarContainer}>
-        <p className={styles.enemyName}>
-          {Slimes[currentSlimeIndexRef.current].name}
-        </p>
-        <div className={styles.enemyHealthBar}>
-          <div
-            className={styles.enemyHealthBarFill}
-            style={{
-              width: `${Math.max(
-                (enemyCurrentHealth / enemyMaxHealth) * 100,
-                0
-              )}%`,
-            }}
-          ></div>
-        </div>
-      </div>
-
-      {combatState[2] && (
-        <div
-          className={styles.damageCont}
-          style={{
-            top: `${Math.random() * 20 + 35}%`,
-            left: `${Math.random() * 15 + 42.5}%`,
-          }}
-        >
-          {combatState[2]}
-        </div>
-      )}
+      <Enemy
+        ref={enemyRef}
+        onEnemyDeath={onEnemyDeath}
+        enemyOnTakeDamage={enemyOnTakeDamage}
+      />
 
       {comboRef.current > 0 && (
         <div className={styles.comboCont}>
