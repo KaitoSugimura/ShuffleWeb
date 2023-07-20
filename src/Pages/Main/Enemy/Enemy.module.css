@@ -54,6 +54,8 @@
   border: 0.25vw solid rgba(43, 43, 43, 0.83);
   border-radius: 0.2vw;
   background-clip: padding-box;
+  
+  margin-top: 1vh;
 }
 
 .enemyHealthBarFill {

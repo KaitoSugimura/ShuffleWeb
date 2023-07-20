@@ -63,6 +63,7 @@ const Enemy = forwardRef((props, ref) => {
                 (enemyCurrentHealth / enemyMaxHealth) * 100,
                 0
               )}%`,
+              transition: "width 0.5s ease-out",
             }}
           ></div>
         </div>
