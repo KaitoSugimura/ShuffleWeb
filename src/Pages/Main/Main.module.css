@@ -1,9 +1,9 @@
 .enemyImage {
   position: fixed;
-  top: 5%;
+  top: 12%;
   left: 50%;
   transform: translate(-50%, 0%);
-  height: 77%;
+  height: 65%;
   width: auto;
 
   z-index: 0;
@@ -158,9 +158,7 @@
 }
 
 .leftCardBox,
-.rightCardBox,
-.leftCardBoxNoAfter,
-.rightCardBoxNoAfter {
+.rightCardBox {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -168,7 +166,7 @@
   position: relative;
 }
 
-.leftCardBox:after,
+/* .leftCardBox:after,
 .rightCardBox:after {
   content: "";
   position: absolute;
@@ -191,7 +189,7 @@
   border-bottom: var(--rbColor) 0.2vw solid;
   border-left: var(--rbColor) 0.2vw solid;
   border-right: var(--rbColor) 0.2vw solid;
-}
+} */
 
 .bottomCenter {
   position: fixed;
@@ -210,7 +208,7 @@
   height: 11vh;
   font-size: 2vw;
 
-  background-color: rgba(6, 199, 216, 0.762);
+  background-color: rgb(6, 198, 216);
   border: 0.25vw solid rgba(43, 43, 43, 0.43);
   background-clip: padding-box;
   color: white;

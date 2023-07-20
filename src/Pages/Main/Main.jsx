@@ -177,19 +177,15 @@ export default function Main() {
                   : "none",
             }}
           >
-            {combatState[1] === 1 ? (
-              <div className={styles.leftCardBoxNoAfter}>
-                {cards[0].map((card, index) => (
-                  <Card key={index} number={card} bAttack={true} />
-                ))}
-              </div>
-            ) : (
-              <div className={styles.leftCardBox}>
-                {cards[0].map((card, index) => (
-                  <Card key={index} number={card} bAttack={false} />
-                ))}
-              </div>
-            )}
+            <div className={styles.leftCardBox}>
+              {cards[0].map((card, index) => (
+                <Card
+                  key={index}
+                  number={card}
+                  bAttack={combatState[1] === 1}
+                />
+              ))}
+            </div>
           </div>
           <div
             className={styles.rightBoxPos}
@@ -205,19 +201,15 @@ export default function Main() {
                   : "none",
             }}
           >
-            {combatState[1] === 2 ? (
-              <div className={styles.rightCardBoxNoAfter}>
-                {cards[1].map((card, index) => (
-                  <Card key={index} number={card} bAttack={true} />
-                ))}
-              </div>
-            ) : (
-              <div className={styles.rightCardBox}>
-                {cards[1].map((card, index) => (
-                  <Card key={index} number={card} bAttack={false} />
-                ))}
-              </div>
-            )}
+            <div className={styles.rightCardBox}>
+              {cards[1].map((card, index) => (
+                <Card
+                  key={index}
+                  number={card}
+                  bAttack={combatState[1] === 2}
+                />
+              ))}
+            </div>
           </div>
         </>
       )}
