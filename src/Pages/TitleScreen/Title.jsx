@@ -44,15 +44,17 @@ export default function Title() {
           </div>
         </>
       )}
-      <div
-        style={{
-          backgroundImage: `url(${settingBG})`,
-        }}
-        className={styles.titleRoot}
-      >
+      <div className={styles.titleRoot}>
+        <div
+          className={styles.backgroundImage}
+          style={{
+            backgroundImage: `url(${settingBG})`,
+          }}
+        ></div>
         <div>
-        <h1 className={styles.title}>Shuffle Battle</h1>
-        <h1 className={styles.subtitle}>Made for PureWeb TakeHome task</h1></div>
+          <h1 className={styles.title}>Shuffle Battle</h1>
+          <h1 className={styles.subtitle}>Made for PureWeb TakeHome task</h1>
+        </div>
         <ul className={styles.gameList}>
           <li>
             <button
@@ -68,7 +70,6 @@ export default function Title() {
             <button
               className={styles.gameListButton}
               onClick={() => {
-                console.log("AAAAA");
                 setShowModal(true);
               }}
             >
