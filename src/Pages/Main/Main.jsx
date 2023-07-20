@@ -56,7 +56,7 @@ export default function Main() {
   };
 
   const enemyOnTakeDamage = () => {
-    setCombatState([0, iRef.current + 0]);
+    setCombatState([0, iRef.current + 1]);
   };
 
   const getActionComponent = () => {
@@ -64,7 +64,7 @@ export default function Main() {
       case 0:
         return (
           <button
-            className={`${styles.bottomCenter} ${styles.rollAgainButton}`}
+            className={`${styles.bottomCenter} ${styles.selectionButton}`}
             onClick={(event) => {
               event.preventDefault();
               setCards(getNewSplitShuffleArrays());
@@ -77,6 +77,7 @@ export default function Main() {
       case 1:
         const handleOnClick = (event, i) => {
           event.preventDefault();
+          iRef.current = i;
           let sum = 0;
           cards[i].forEach((card) => {
             sum += card;

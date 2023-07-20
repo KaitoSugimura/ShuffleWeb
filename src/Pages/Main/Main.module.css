@@ -103,7 +103,7 @@
 
 .bottomCenter {
   position: fixed;
-  bottom: 4vh;
+  bottom: 6vh;
   left: 50%;
   transform: translate(-50%, 0%);
 
@@ -111,18 +111,8 @@
   justify-content: center;
   align-items: center;
   gap: 6vw;
-}
 
-.rollAgainButton {
-  width: 35vw;
-  height: 11vh;
-  font-size: 2vw;
-
-  background-color: rgb(6, 198, 216);
-  border: 0.25vw solid rgba(43, 43, 43, 0.43);
-  background-clip: padding-box;
-  color: white;
-  cursor: pointer;
+  z-index: 10;
 }
 
 .selectionButton {
@@ -131,17 +121,23 @@
   font-size: 2vw;
 
   color: white;
-  background-color: aqua;
-  border: 0.25vw solid rgba(43, 43, 43, 0.43);
-  background-clip: padding-box;
+  border: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(55, 55, 55, 0.8) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
 
   cursor: pointer;
 }
 
-.selectionButtonLeft {
-  background-color: #126be6cc;
-}
+.selectionButton:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(73, 73, 73, 0.8) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
 
-.selectionButtonRight {
-  background-color: #21e40fcc;
 }
