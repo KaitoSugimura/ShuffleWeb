@@ -161,10 +161,10 @@ export default function Main() {
           <div
             className={styles.leftBoxPos}
             style={{
-              transform:
-                combatState[1] === 1
-                  ? "translate(-68%, 0%)"
-                  : "translate(-108%, 0%)",
+              // transform:
+              //   combatState[1] === 1
+              //     ? "translate(-8%, 0%)"
+              //     : "translate(-108%, 0%)",
               top: combatState[1] === 1 ? "38%" : "65%",
               transition:
                 combatState[1] === 1
@@ -185,10 +185,10 @@ export default function Main() {
           <div
             className={styles.rightBoxPos}
             style={{
-              transform:
-                combatState[1] === 2
-                  ? "translate(-40%, 0%)"
-                  : "translate(8%, 0%)",
+              // transform:
+              //   combatState[1] === 2
+              //     ? "translate(-92%, 0%)"
+              //     : "translate(8%, 0%)",
               top: combatState[1] === 2 ? "38%" : "65%",
               transition:
                 combatState[1] === 2
