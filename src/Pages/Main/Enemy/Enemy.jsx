@@ -1,4 +1,10 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import styles from "./Enemy.module.css";
 
 const Enemy = forwardRef((props, ref) => {
@@ -6,7 +12,6 @@ const Enemy = forwardRef((props, ref) => {
   const [enemyMaxHealth, setEnemyMaxHealth] = useState(9999999);
   const [enemyCurrentHealth, setEnemyCurrentHealth] = useState(enemyMaxHealth);
   const [damageInfo, setDamageInfo] = useState(null);
-  const damageCompRef = useRef(null);
   const nameRef = useRef("MISSINGNO."); // :)
   const imageRef = useRef("");
 
@@ -28,11 +33,6 @@ const Enemy = forwardRef((props, ref) => {
       ]);
       setEnemyCurrentHealth((prev) => {
         let newHP = prev - damage;
-        if (newHP <= 0) {
-          onEnemyDeath();
-        } else {
-          enemyOnTakeDamage();
-        }
         return newHP;
       });
       setTimeout(() => {
@@ -40,6 +40,16 @@ const Enemy = forwardRef((props, ref) => {
       }, 500);
     },
   }));
+
+  useEffect(() => {
+    if (enemyCurrentHealth <= 0) {
+      onEnemyDeath();
+    } else {
+      if (enemyCurrentHealth < enemyMaxHealth) {
+        enemyOnTakeDamage();
+      }
+    }
+  }, [enemyCurrentHealth]);
 
   return (
     <>

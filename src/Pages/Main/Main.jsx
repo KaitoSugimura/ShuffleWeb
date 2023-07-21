@@ -8,6 +8,7 @@ import { GameContext } from "../../GameContext";
 import Slimes from "./Data/SlimeLineup";
 import Enemy from "./Enemy/Enemy";
 import { SoundContext } from "../../Context/SoundContext";
+import ActionBar from "./ActionBar/ActionBar";
 
 export default function Main() {
   const { playSFX } = useContext(SoundContext);
@@ -82,77 +83,41 @@ export default function Main() {
     }
   };
 
-  const getActionComponent = () => {
-    switch (combatState[0]) {
-      case 0:
-        return (
-          <button
-            className={`${styles.bottomCenter} ${styles.selectionButton}`}
-            onClick={(event) => {
-              event.preventDefault();
-              playSFX("Roll");
-              setCards(getNewSplitShuffleArrays());
-              setCombatState([1, 0]);
-            }}
-          >
-            Roll Attack
-          </button>
-        );
-      case 1:
-        const handleOnClick = (event, i) => {
-          event.preventDefault();
-          iRef.current = i;
-          let sum = 0;
-          cards[i].forEach((card) => {
-            sum += card;
-          });
-          if (
-            sum >=
-            Math.ceil(
-              (currentNumberOfCards.current *
-                (currentNumberOfCards.current + 1)) /
-                4
-            )
-          ) {
-            playSFX("PowerUp");
-            comboRef.current++;
-          } else {
-            comboRef.current = 0;
-          }
-          playSFX("Select");
+  const handleOnRollAttackClick = (event) => {
+    event.preventDefault();
+    playSFX("Roll");
+    setCards(getNewSplitShuffleArrays());
+    setCombatState([1, 0]);
+  };
 
-          setCombatState([i + 2, i + 1]);
-          setTimeout(() => {
-            enemyRef.current.takeDamage(Math.ceil(sum * getDamageMultiplier()));
-          }, 500);
-
-          doubleDiceTurnsRemaining.current--;
-          currentNumberOfCards.current =
-            doubleDiceTurnsRemaining.current > 0 ? 20 : 10;
-        };
-        return (
-          <div className={styles.bottomCenter}>
-            <button
-              className={`${styles.selectionButton} ${styles.selectionButtonLeft}`}
-              onClick={(event) => {
-                handleOnClick(event, 0);
-              }}
-            >
-              Left
-            </button>
-            <button
-              className={`${styles.selectionButton} ${styles.selectionButtonRight}`}
-              onClick={(event) => {
-                handleOnClick(event, 1);
-              }}
-            >
-              Right
-            </button>
-          </div>
-        );
-      default:
-        return <></>;
+  const handleOnActionBarSelectionClick = (event, i) => {
+    event.preventDefault();
+    iRef.current = i;
+    let sum = 0;
+    cards[i].forEach((card) => {
+      sum += card;
+    });
+    if (
+      sum >=
+      Math.ceil(
+        (currentNumberOfCards.current * (currentNumberOfCards.current + 1)) / 4
+      )
+    ) {
+      playSFX("PowerUp");
+      comboRef.current++;
+    } else {
+      comboRef.current = 0;
     }
+    playSFX("Select");
+
+    setCombatState([i + 2, i + 1]);
+    setTimeout(() => {
+      enemyRef.current.takeDamage(Math.ceil(sum * getDamageMultiplier()));
+    }, 500);
+
+    doubleDiceTurnsRemaining.current--;
+    currentNumberOfCards.current =
+      doubleDiceTurnsRemaining.current > 0 ? 20 : 10;
   };
 
   return (
@@ -212,15 +177,9 @@ export default function Main() {
                   : "none",
             }}
           >
-            <div className={styles.leftCardBox}>
-              {cards[0].map((card, index) => (
-                <Card
-                  key={index}
-                  number={card}
-                  bAttack={combatState[1] === 1}
-                />
-              ))}
-            </div>
+            {cards[0].map((card, index) => (
+              <Card key={index} number={card} bAttack={combatState[1] === 1} />
+            ))}
           </div>
           <div
             className={styles.rightBoxPos}
@@ -236,20 +195,18 @@ export default function Main() {
                   : "none",
             }}
           >
-            <div className={styles.rightCardBox}>
-              {cards[1].map((card, index) => (
-                <Card
-                  key={index}
-                  number={card}
-                  bAttack={combatState[1] === 2}
-                />
-              ))}
-            </div>
+            {cards[1].map((card, index) => (
+              <Card key={index} number={card} bAttack={combatState[1] === 2} />
+            ))}
           </div>
         </>
       )}
 
-      {getActionComponent()}
+      <ActionBar
+        ActionCombatState={combatState[0]}
+        handleOnRollAttackClick={handleOnRollAttackClick}
+        handleOnActionBarSelectionClick={handleOnActionBarSelectionClick}
+      />
     </div>
   );
 }

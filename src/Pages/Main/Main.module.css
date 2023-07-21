@@ -51,7 +51,7 @@
   color: red;
 }
 
-.skillButton{
+.skillButton {
   position: fixed;
   top: 46%;
   left: 2%;
@@ -69,7 +69,7 @@
   border-left: white 0.3vw solid;
 }
 
-.skillButton:after{
+.skillButton:after {
   content: "Active Skill:";
   position: absolute;
   top: -18%;
@@ -77,7 +77,7 @@
   font-size: 1vw;
 }
 
-.skillButton:hover{
+.skillButton:hover {
   background: linear-gradient(to right, #2a2a2acf, #00000000);
 }
 
@@ -87,7 +87,13 @@
   bottom: 37%;
   left: 50%;
   z-index: 1;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  gap: 0.5vw;
 }
+
 .leftBoxPos {
   transform: translate(-108%, 0%);
 }
@@ -96,77 +102,11 @@
   transform: translate(8%, 0%);
 }
 
-.leftCardBox,
+/* .leftCardBox,
 .rightCardBox {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   align-items: center;
   gap: 0.5vw;
   position: relative;
-}
-
-/* .leftCardBox:after,
-.rightCardBox:after {
-  content: "";
-  position: absolute;
-  bottom: -15%;
-  left: -0.5vw;
-
-  width: calc(100% + 1vw);
-  height: 20%;
-}
-
-.leftCardBox:after {
-  --lbColor: #006aff;
-  border-bottom: var(--lbColor) 0.2vw solid;
-  border-left: var(--lbColor) 0.2vw solid;
-  border-right: var(--lbColor) 0.2vw solid;
-}
-
-.rightCardBox:after {
-  --rbColor: #15ff00;
-  border-bottom: var(--rbColor) 0.2vw solid;
-  border-left: var(--rbColor) 0.2vw solid;
-  border-right: var(--rbColor) 0.2vw solid;
 } */
-
-.bottomCenter {
-  position: fixed;
-  bottom: 6vh;
-  left: 50%;
-  transform: translate(-50%, 0%);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6vw;
-
-  z-index: 10;
-}
-
-.selectionButton {
-  width: 34vw;
-  height: 11vh;
-  font-size: 2vw;
-
-  color: white;
-  border: none;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(55, 55, 55, 0.8) 50%,
-    rgba(0, 0, 0, 0) 100%
-  );
-
-  cursor: pointer;
-}
-
-.selectionButton:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(73, 73, 73, 0.8) 50%,
-    rgba(0, 0, 0, 0) 100%
-  );
-
-}
