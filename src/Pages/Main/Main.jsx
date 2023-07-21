@@ -85,14 +85,18 @@ export default function Main() {
       case 1:
         const handleOnClick = (event, i) => {
           event.preventDefault();
-          playSFX("Select");
           iRef.current = i;
           let sum = 0;
           cards[i].forEach((card) => {
             sum += card;
           });
-          if (sum > 27) comboRef.current++;
-          else comboRef.current = 0;
+          if (sum > 27) {
+            playSFX("PowerUp");
+            comboRef.current++;
+          } else {
+            comboRef.current = 0;
+          }
+          playSFX("Select");
 
           setCombatState([i + 2, i + 1]);
           setTimeout(() => {

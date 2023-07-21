@@ -8,6 +8,7 @@ import Select from "/Sound/SFX/Select.mp3";
 import Hit from "/Sound/SFX/Hit.mp3";
 import Death from "/Sound/SFX/Death.mp3";
 import Roll from "/Sound/SFX/Roll.mp3";
+import PowerUp from "/Sound/SFX/PowerUp.mp3";
 
 const soundList = {
   Select: Select,
@@ -23,7 +24,6 @@ export const SoundContextProvider = ({ children }) => {
   const audioRef = useRef(null);
   const SFXRef = useRef(null);
   const currentTimeRef = useRef(0);
-  const currentThemeRef = useRef(null);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -42,10 +42,16 @@ export const SoundContextProvider = ({ children }) => {
   const playSFX = useCallback(
     (sfxName) => {
       if (volume == 0) return;
-      const playPath = soundList[sfxName];
-      if (playPath) {
-        SFXRef.current.src = playPath;
-        SFXRef.current.play();
+      if (sfxName === "PowerUp") {
+        const audio = new Audio(PowerUp);
+        audio.volume = volume;
+        audio.play();
+      } else {
+        const playPath = soundList[sfxName];
+        if (playPath) {
+          SFXRef.current.src = playPath;
+          SFXRef.current.play();
+        }
       }
     },
     [volume]
