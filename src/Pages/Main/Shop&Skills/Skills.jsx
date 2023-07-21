@@ -8,18 +8,19 @@ export default function Skills({ SkillsList }) {
       {SkillsList.map((skill, index) => (
         <button
           className={`${styles.skillButton} ${
-            skill.currentTurnsLeft > 0
+            skill.held > 0
               ? ""
               : styles.skillButtonInactive
           }`}
           onClick={() => {
-            if (skill.currentTurnsLeft > 0) {
+            if (skill.held > 0) {
               skill.active();
             }
           }}
           key={index}
         >
           {skill.name}
+          <span className={styles.charges}>{skill.held} Charges</span>
         </button>
       ))}
     </div>

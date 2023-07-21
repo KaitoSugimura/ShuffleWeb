@@ -5,7 +5,7 @@
   border: none;
   margin: 5vh 0 0 auto;
 
-  
+
   pointer-events: all;
 }
 
@@ -21,4 +21,30 @@
 .ShopImage {
   width: 100%;
   height: 100%;
+}
+
+.ShopCont{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.BuySkillbutton{
+  width: 90%;
+  border: none;
+  cursor: pointer;
+  background-color: aliceblue;
+  border: rgba(0, 0, 0, 0.51) solid 0.2vw;
+  margin: 1vw;
+  padding: 2vw;
+  font-size: 1.5vw;
+  text-align: center;
+  pointer-events: all;
 }

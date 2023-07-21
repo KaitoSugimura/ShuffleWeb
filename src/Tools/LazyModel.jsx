@@ -1,15 +1,16 @@
 import styles from "./LazyModel.module.css";
 
-// Super bad code for a modal 
+// Super bad code for a modal
 
 export default function LazyModel({ children, setShowModal, style }) {
   return (
-    <div
+    <div className={styles.LazyModalRoot}>
+      <div
       className={styles.LazyModalBack}
-      onClick={() => {
-        setShowModal(false);
-      }}
-    >
+        onClick={() => {
+          setShowModal(false);
+        }}
+      ></div>
       <div className={styles.LazyModal} style={style}>
         <div
           className={styles.closeButton}

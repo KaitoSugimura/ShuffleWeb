@@ -33,7 +33,10 @@ export default function Main() {
   const currentNumberOfCards = useRef(10);
   const comboRef = useRef(0);
 
-  const currentGoldAmount = useRef(0);
+  const [currentGoldAmount, setCurrentGoldAmount] = useState(100);
+  const addGoldAmount = (a) => {
+    setCurrentGoldAmount((prev) => prev + a);
+  };
   const doubleDiceTurnsRemaining = useRef(0);
 
   // Initial set
@@ -64,7 +67,7 @@ export default function Main() {
   const onEnemyDeath = () => {
     playSFX("Death");
     setTimeout(() => {
-      currentGoldAmount.current += Slimes[currentSlimeIndexRef.current].reward;
+      addGoldAmount(Slimes[currentSlimeIndexRef.current].reward)
       currentSlimeIndexRef.current++;
       comboRef.current = 0;
       if (currentSlimeIndexRef.current >= Slimes.length) {
@@ -137,7 +140,11 @@ export default function Main() {
 
   return (
     <MainContext.Provider
-      value={{ setDieAmount, currentGold: currentGoldAmount.current }}
+      value={{
+        setDieAmount,
+        currentGold: currentGoldAmount,
+        addGold: addGoldAmount,
+      }}
     >
       <div className={styles.mainRoot}>
         <SoundSetting

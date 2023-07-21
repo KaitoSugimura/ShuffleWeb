@@ -9,32 +9,36 @@ export default function MainUI() {
   const { currentGold, setDieAmount } = useContext(MainContext);
   const { playSFX } = useContext(SoundContext);
 
-  const [skill1TurnsLeft, setSkill1TurnsLeft] = useState(1);
-  const [skill2TurnsLeft, setSkill2TurnsLeft] = useState(1);
+  const [skill1Held, setSkill1Held] = useState(0);
+  const [skill2Held, setSkill2Held] = useState(0);
 
   const skill1Active = () => {
     playSFX("Skill1");
     setDieAmount(20);
-    setSkill1TurnsLeft((prev) => prev - 1);
+    setSkill1Held((prev) => prev - 1);
   };
 
   const skill2Active = () => {
-    setSkill2TurnsLeft((prev) => prev - 1);
+    setSkill2Held((prev) => prev - 1);
   };
 
   const SkillsList = [
     {
       name: "Double Dice",
       cost: "100",
-      turns: 1,
-      currentTurnsLeft: skill1TurnsLeft,
+      held: skill1Held,
+      buy: () => {
+        setSkill1Held((prev) => prev + 1);
+      },
       active: skill1Active,
     },
     {
       name: "True Vision",
       cost: "25",
-      turns: 3,
-      currentTurnsLeft: skill2TurnsLeft,
+      held: skill2Held,
+      buy: () => {
+        setSkill2Held((prev) => prev + 1);
+      },
       active: skill2Active,
     },
   ];
