@@ -26,6 +26,7 @@ export const SoundContextProvider = ({ children }) => {
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef(null);
   const SFXRef = useRef(null);
+  const SFXSecondary = useRef(null);
   const currentTimeRef = useRef(0);
 
   useEffect(() => {
@@ -48,9 +49,8 @@ export const SoundContextProvider = ({ children }) => {
       if (volume == 0) return;
       const playPath = soundList[sfxName];
       if (sfxName === "PowerUp" || sfxName === "Skill1") {
-        const audio = new Audio(playPath);
-        audio.volume = volume;
-        audio.play();
+        SFXSecondary.current.src = playPath;
+        SFXSecondary.current.play();
       } else {
         if (playPath) {
           SFXRef.current.src = playPath;
@@ -112,6 +112,7 @@ export const SoundContextProvider = ({ children }) => {
         src={titleMusic}
       />
       <audio ref={SFXRef} />
+      <audio ref={SFXSecondary} />
       {children}
     </SoundContext.Provider>
   );
