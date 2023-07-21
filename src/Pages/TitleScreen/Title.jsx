@@ -3,6 +3,7 @@ import styles from "./Title.module.css";
 import settingBG from "/Images/Title.jpg";
 import { GameContext } from "../../GameContext";
 import SoundSetting from "../../Tools/SoundSetting";
+import LazyModel from "../../Tools/LazyModel";
 
 export default function Title() {
   const { setGameState } = useContext(GameContext);
@@ -11,39 +12,22 @@ export default function Title() {
   return (
     <>
       {showModal && (
-        <>
-          <div
-            className={styles.LazyModalBack}
-            onClick={() => {
-              setShowModal(false);
-            }}
-          ></div>
-          <div className={styles.LazyModal}>
-            <div
-              className={styles.closeButton}
-              onClick={() => {
-                setShowModal(false);
-              }}
-            >
-              X
-            </div>
-
-            <p className={styles.descTitle}>How To Play</p>
-            <p className={styles.desc}>
-              1. Start by pressing the Roll Attack button.
-              <br />
-              2. This will roll 10 numbers from 1 to 10 in random order.
-              <br />
-              3. These numbers will be split in 2, left and right groups.
-              <br />
-              4. You will deal damage equal to the total sum of the group.
-              <br />
-              5. Picking the larger group consecutively will deal bonus damage!
-              <br />
-              6. Defeat the enemy by reducing its health to 0.
-            </p>
-          </div>
-        </>
+        <LazyModel setShowModal={setShowModal}>
+          <p className={styles.descTitle}>How To Play</p>
+          <p className={styles.desc}>
+            1. Start by pressing the Roll Attack button.
+            <br />
+            2. This will roll 10 numbers from 1 to 10 in random order.
+            <br />
+            3. These numbers will be split in 2, left and right groups.
+            <br />
+            4. You will deal damage equal to the total sum of the group.
+            <br />
+            5. Picking the larger group consecutively will deal bonus damage!
+            <br />
+            6. Defeat the enemy by reducing its health to 0.
+          </p>
+        </LazyModel>
       )}
       <div className={styles.titleRoot}>
         <SoundSetting

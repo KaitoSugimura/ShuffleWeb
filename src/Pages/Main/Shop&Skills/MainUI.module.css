@@ -1,0 +1,44 @@
+.MainUIRoot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  z-index: 99999;
+
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.BarCont {
+  position: absolute;
+  top: 5vh;
+  right: 5vh;
+}
+
+.GoldCont{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.GoldImage {
+  width: 5rem;
+  height: 5rem;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.GoldText {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: white;
+  display: inline-block;
+
+}

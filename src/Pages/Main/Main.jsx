@@ -1,4 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import styles from "./Main.module.css";
 import shuffle from "./Shuffle";
 import Card from "./Card";
@@ -9,6 +16,9 @@ import Slimes from "./Data/SlimeLineup";
 import Enemy from "./Enemy/Enemy";
 import { SoundContext } from "../../Context/SoundContext";
 import ActionBar from "./ActionBar/ActionBar";
+import MainUI from "./Shop&Skills/MainUI";
+
+export const MainContext = createContext();
 
 export default function Main() {
   const { playSFX } = useContext(SoundContext);
@@ -23,8 +33,8 @@ export default function Main() {
   const currentNumberOfCards = useRef(10);
   const comboRef = useRef(0);
 
+  const currentGoldAmount = useRef(0);
   const doubleDiceTurnsRemaining = useRef(0);
-  const [skillDoubleDieUsed, setSkillDoubleDieUsed] = useState(false);
 
   // Initial set
   useEffect(() => {
@@ -54,6 +64,7 @@ export default function Main() {
   const onEnemyDeath = () => {
     playSFX("Death");
     setTimeout(() => {
+      currentGoldAmount.current += Slimes[currentSlimeIndexRef.current].reward;
       currentSlimeIndexRef.current++;
       comboRef.current = 0;
       if (currentSlimeIndexRef.current >= Slimes.length) {
@@ -75,13 +86,17 @@ export default function Main() {
     setCombatState([0, iRef.current + 1]);
   };
 
-  const setDieAmount = (amount) => {
-    currentNumberOfCards.current = amount;
-    doubleDiceTurnsRemaining.current = 1;
-    if (combatState[0] === 1) {
-      setCards(getNewSplitShuffleArrays());
-    }
-  };
+  const setDieAmount = useCallback(
+    (amount) => {
+      currentNumberOfCards.current = amount;
+      doubleDiceTurnsRemaining.current = 1;
+      console.log(combatState[0]);
+      if (combatState[0] === 1) {
+        setCards(getNewSplitShuffleArrays());
+      }
+    },
+    [combatState]
+  );
 
   const handleOnRollAttackClick = (event) => {
     event.preventDefault();
@@ -121,92 +136,92 @@ export default function Main() {
   };
 
   return (
-    <div className={styles.mainRoot}>
-      <SoundSetting
-        style={{
-          top: `5vh`,
-          left: `5vh`,
-        }}
-      />
-
-      <Background />
-
-      <Enemy
-        ref={enemyRef}
-        onEnemyDeath={onEnemyDeath}
-        enemyOnTakeDamage={enemyOnTakeDamage}
-      />
-
-      {comboRef.current > 0 && (
-        <div className={styles.comboCont}>
-          <p className={styles.comboText}>
-            <span>{comboRef.current}</span> Combo
-          </p>
-          <p className={styles.damageText}>
-            <span>x{getDamageMultiplier()}</span> Damage!
-          </p>
-        </div>
-      )}
-
-      {!skillDoubleDieUsed && (
-        <button
-          className={styles.skillButton}
-          onClick={() => {
-            playSFX("Skill1");
-            setSkillDoubleDieUsed(true);
-            setDieAmount(20);
+    <MainContext.Provider
+      value={{ setDieAmount, currentGold: currentGoldAmount.current }}
+    >
+      <div className={styles.mainRoot}>
+        <SoundSetting
+          style={{
+            top: `5vh`,
+            left: `5vh`,
           }}
-        >
-          Double Die
-        </button>
-      )}
+        />
 
-      {cards && (
-        <>
-          <div
-            className={styles.leftBoxPos}
-            style={{
-              // transform:
-              //   combatState[1] === 1
-              //     ? "translate(-8%, 0%)"
-              //     : "translate(-108%, 0%)",
-              bottom: combatState[1] === 1 ? "68%" : "20%",
-              transition:
-                combatState[1] === 1
-                  ? "transform 0.5s ease-out, bottom 0.5s ease-in"
-                  : "none",
-            }}
-          >
-            {cards[0].map((card, index) => (
-              <Card key={index} number={card} bAttack={combatState[1] === 1} />
-            ))}
-          </div>
-          <div
-            className={styles.rightBoxPos}
-            style={{
-              // transform:
-              //   combatState[1] === 2
-              //     ? "translate(-92%, 0%)"
-              //     : "translate(8%, 0%)",
-              bottom: combatState[1] === 2 ? "68%" : "20%",
-              transition:
-                combatState[1] === 2
-                  ? "transform 0.5s ease-out, bottom 0.5s ease-in"
-                  : "none",
-            }}
-          >
-            {cards[1].map((card, index) => (
-              <Card key={index} number={card} bAttack={combatState[1] === 2} />
-            ))}
-          </div>
-        </>
-      )}
+        <Background />
+        <MainUI />
 
-      <ActionBar
-        ActionCombatState={combatState[0]}
-        handleOnRollAttackClick={handleOnRollAttackClick}
-        handleOnActionBarSelectionClick={handleOnActionBarSelectionClick}
-      />
-    </div>
+        <Enemy
+          ref={enemyRef}
+          onEnemyDeath={onEnemyDeath}
+          enemyOnTakeDamage={enemyOnTakeDamage}
+        />
+
+        {comboRef.current > 0 && (
+          <div className={styles.comboCont}>
+            <p className={styles.comboText}>
+              <span>{comboRef.current}</span> Combo
+            </p>
+            <p className={styles.damageText}>
+              <span>x{getDamageMultiplier()}</span> Damage!
+            </p>
+          </div>
+        )}
+
+        {cards && (
+          <>
+            <div
+              className={styles.leftBoxPos}
+              style={{
+                // transform:
+                //   combatState[1] === 1
+                //     ? "translate(-8%, 0%)"
+                //     : "translate(-108%, 0%)",
+                bottom: combatState[1] === 1 ? "68%" : "20%",
+                transition:
+                  combatState[1] === 1
+                    ? "transform 0.5s ease-out, bottom 0.5s ease-in"
+                    : "none",
+              }}
+            >
+              {cards[0].map((card, index) => (
+                <Card
+                  key={index}
+                  number={card}
+                  bAttack={combatState[1] === 1}
+                />
+              ))}
+            </div>
+            <div
+              className={styles.rightBoxPos}
+              style={{
+                // transform:
+                //   combatState[1] === 2
+                //     ? "translate(-92%, 0%)"
+                //     : "translate(8%, 0%)",
+                bottom: combatState[1] === 2 ? "68%" : "20%",
+                transition:
+                  combatState[1] === 2
+                    ? "transform 0.5s ease-out, bottom 0.5s ease-in"
+                    : "none",
+              }}
+            >
+              {cards[1].map((card, index) => (
+                <Card
+                  key={index}
+                  number={card}
+                  bAttack={combatState[1] === 2}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        <ActionBar
+          ActionCombatState={combatState[0]}
+          handleOnRollAttackClick={handleOnRollAttackClick}
+          handleOnActionBarSelectionClick={handleOnActionBarSelectionClick}
+        />
+      </div>
+    </MainContext.Provider>
   );
 }

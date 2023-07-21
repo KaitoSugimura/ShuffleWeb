@@ -1,0 +1,45 @@
+.skillsRoot{
+  position: absolute;
+  bottom: 50%;
+  left: 2%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3vh;
+}
+
+.skillButton {
+  position: relative;
+  width: 20vw;
+  height: 4vw;
+  border: none;
+  background: linear-gradient(to right, #000000cf, #00000000);
+  color: white;
+  font-size: 1.6vw;
+  text-align: start;
+  padding-left: 2vw;
+  cursor: pointer;
+
+  border-left: white 0.3vw solid;
+
+  pointer-events: all;
+}
+
+.skillButton:hover{
+  background: linear-gradient(to right, #303030cf, #00000000);
+}
+
+
+.skillButton:after {
+  content: "Active Skill:";
+  position: absolute;
+  top: -18%;
+  left: 3%;
+  font-size: 1vw;
+}
+
+.skillButton.skillButtonInactive{
+  opacity: 0.3;
+}
