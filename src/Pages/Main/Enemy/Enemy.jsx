@@ -12,7 +12,6 @@ const Enemy = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     setEnemy(image, name, maxHealth) {
-      console.log("hello");
       imageRef.current = image;
       nameRef.current = name;
       setEnemyMaxHealth(maxHealth);
@@ -30,9 +29,7 @@ const Enemy = forwardRef((props, ref) => {
       setEnemyCurrentHealth((prev) => {
         let newHP = prev - damage;
         if (newHP <= 0) {
-          setTimeout(() => {
-            onEnemyDeath();
-          }, 1000);
+          onEnemyDeath();
         } else {
           enemyOnTakeDamage();
         }

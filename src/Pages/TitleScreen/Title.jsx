@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import styles from "./Title.module.css";
 import settingBG from "/Images/Title.jpg";
 import { GameContext } from "../../GameContext";
+import SoundSetting from "../../Tools/SoundSetting";
 
 export default function Title() {
   const { setGameState } = useContext(GameContext);
@@ -45,6 +46,12 @@ export default function Title() {
         </>
       )}
       <div className={styles.titleRoot}>
+        <SoundSetting
+          style={{
+            top: `5vh`,
+            left: `5vh`,
+          }}
+        />
         <div
           className={styles.backgroundImage}
           style={{

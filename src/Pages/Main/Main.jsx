@@ -3,11 +3,14 @@ import styles from "./Main.module.css";
 import shuffle from "./Shuffle";
 import Card from "./Card";
 import Background from "./Graphics/Background";
+import SoundSetting from "../../Tools/SoundSetting";
 import { GameContext } from "../../GameContext";
 import Slimes from "./Data/SlimeLineup";
 import Enemy from "./Enemy/Enemy";
+import { SoundContext } from "../../Context/SoundContext";
 
 export default function Main() {
+  const { playSFX } = useContext(SoundContext);
   const { setGameState } = useContext(GameContext);
   const enemyRef = useRef(null);
 
@@ -18,16 +21,16 @@ export default function Main() {
   const currentSlimeIndexRef = useRef(0);
   const comboRef = useRef(0);
 
-    // Initial set
-    useEffect(() => {
-      if (enemyRef.current) {
-        enemyRef.current.setEnemy(
-          Slimes[0].image,
-          Slimes[0].name,
-          Slimes[0].health
-        );
-      }
-    }, []);
+  // Initial set
+  useEffect(() => {
+    if (enemyRef.current) {
+      enemyRef.current.setEnemy(
+        Slimes[0].image,
+        Slimes[0].name,
+        Slimes[0].health
+      );
+    }
+  }, []);
 
   const getNewSplitShuffleArrays = () => {
     const arr = shuffle(10);
@@ -40,22 +43,26 @@ export default function Main() {
   };
 
   const onEnemyDeath = () => {
-    currentSlimeIndexRef.current++;
-    comboRef.current = 0;
-    if (currentSlimeIndexRef.current >= Slimes.length) {
-      setGameState("end");
-    } else {
-      setCards(null);
-      enemyRef.current.setEnemy(
-        Slimes[currentSlimeIndexRef.current].image,
-        Slimes[currentSlimeIndexRef.current].name,
-        Slimes[currentSlimeIndexRef.current].health
-      );
-      setCombatState([0, 0]);
-    }
+    playSFX("Death");
+    setTimeout(() => {
+      currentSlimeIndexRef.current++;
+      comboRef.current = 0;
+      if (currentSlimeIndexRef.current >= Slimes.length) {
+        setGameState("end");
+      } else {
+        setCards(null);
+        enemyRef.current.setEnemy(
+          Slimes[currentSlimeIndexRef.current].image,
+          Slimes[currentSlimeIndexRef.current].name,
+          Slimes[currentSlimeIndexRef.current].health
+        );
+        setCombatState([0, 0]);
+      }
+    }, 1000);
   };
 
   const enemyOnTakeDamage = () => {
+    playSFX("Hit");
     setCombatState([0, iRef.current + 1]);
   };
 
@@ -67,6 +74,7 @@ export default function Main() {
             className={`${styles.bottomCenter} ${styles.selectionButton}`}
             onClick={(event) => {
               event.preventDefault();
+              playSFX("Roll");
               setCards(getNewSplitShuffleArrays());
               setCombatState([1, 0]);
             }}
@@ -77,6 +85,7 @@ export default function Main() {
       case 1:
         const handleOnClick = (event, i) => {
           event.preventDefault();
+          playSFX("Select");
           iRef.current = i;
           let sum = 0;
           cards[i].forEach((card) => {
@@ -115,9 +124,15 @@ export default function Main() {
     }
   };
 
-
   return (
     <div className={styles.mainRoot}>
+      <SoundSetting
+        style={{
+          top: `5vh`,
+          left: `5vh`,
+        }}
+      />
+
       <Background />
 
       <Enemy
