@@ -9,12 +9,15 @@ import Hit from "/Sound/SFX/Hit.mp3";
 import Death from "/Sound/SFX/Death.mp3";
 import Roll from "/Sound/SFX/Roll.mp3";
 import PowerUp from "/Sound/SFX/PowerUp.mp3";
+import Skill1 from "/Sound/SFX/Skill1.mp3";
 
 const soundList = {
   Select: Select,
   Hit: Hit,
   Death: Death,
   Roll: Roll,
+  PowerUp: PowerUp,
+  Skill1: Skill1,
 };
 
 export const SoundContext = createContext();
@@ -25,13 +28,22 @@ export const SoundContextProvider = ({ children }) => {
   const SFXRef = useRef(null);
   const currentTimeRef = useRef(0);
 
+  const startUp = useRef(true);
+
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
       SFXRef.current.volume = volume;
       audioRef.current.currentTime = currentTimeRef.current;
+
       if (volume == 0) audioRef.current.pause();
       else audioRef.current.play();
+
+      if (startUp.current) {
+        startUp.current = false;
+        playMusic("title");
+        return;
+      }
     }
   }, [volume]);
 
@@ -42,12 +54,12 @@ export const SoundContextProvider = ({ children }) => {
   const playSFX = useCallback(
     (sfxName) => {
       if (volume == 0) return;
-      if (sfxName === "PowerUp") {
-        const audio = new Audio(PowerUp);
+      const playPath = soundList[sfxName];
+      if (sfxName === "PowerUp" || sfxName === "Skill1") {
+        const audio = new Audio(playPath);
         audio.volume = volume;
         audio.play();
       } else {
-        const playPath = soundList[sfxName];
         if (playPath) {
           SFXRef.current.src = playPath;
           SFXRef.current.play();

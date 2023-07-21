@@ -19,7 +19,11 @@ export default function Main() {
   const iRef = useRef(0);
 
   const currentSlimeIndexRef = useRef(0);
+  const currentNumberOfCards = useRef(10);
   const comboRef = useRef(0);
+
+  const doubleDiceTurnsRemaining = useRef(0);
+  const [skillDoubleDieUsed, setSkillDoubleDieUsed] = useState(false);
 
   // Initial set
   useEffect(() => {
@@ -33,13 +37,17 @@ export default function Main() {
   }, []);
 
   const getNewSplitShuffleArrays = () => {
-    const arr = shuffle(10);
-    return [arr.slice(0, 5), arr.slice(5, 10)];
+    const numberOfCards = currentNumberOfCards.current;
+    const arr = shuffle(numberOfCards);
+    return [
+      arr.slice(0, numberOfCards / 2),
+      arr.slice(numberOfCards / 2, numberOfCards),
+    ];
   };
 
   const getDamageMultiplier = () => {
     if (comboRef.current === 0) return 1;
-    return 1 + 0.5 * (comboRef.current - 1);
+    return comboRef.current;
   };
 
   const onEnemyDeath = () => {
@@ -66,6 +74,14 @@ export default function Main() {
     setCombatState([0, iRef.current + 1]);
   };
 
+  const setDieAmount = (amount) => {
+    currentNumberOfCards.current = amount;
+    doubleDiceTurnsRemaining.current = 1;
+    if (combatState[0] === 1) {
+      setCards(getNewSplitShuffleArrays());
+    }
+  };
+
   const getActionComponent = () => {
     switch (combatState[0]) {
       case 0:
@@ -90,7 +106,14 @@ export default function Main() {
           cards[i].forEach((card) => {
             sum += card;
           });
-          if (sum > 27) {
+          if (
+            sum >=
+            Math.ceil(
+              (currentNumberOfCards.current *
+                (currentNumberOfCards.current + 1)) /
+                4
+            )
+          ) {
             playSFX("PowerUp");
             comboRef.current++;
           } else {
@@ -102,6 +125,10 @@ export default function Main() {
           setTimeout(() => {
             enemyRef.current.takeDamage(Math.ceil(sum * getDamageMultiplier()));
           }, 500);
+
+          doubleDiceTurnsRemaining.current--;
+          currentNumberOfCards.current =
+            doubleDiceTurnsRemaining.current > 0 ? 20 : 10;
         };
         return (
           <div className={styles.bottomCenter}>
@@ -156,6 +183,19 @@ export default function Main() {
         </div>
       )}
 
+      {!skillDoubleDieUsed && (
+        <button
+          className={styles.skillButton}
+          onClick={() => {
+            playSFX("Skill1");
+            setSkillDoubleDieUsed(true);
+            setDieAmount(20);
+          }}
+        >
+          Double Die
+        </button>
+      )}
+
       {cards && (
         <>
           <div
@@ -165,10 +205,10 @@ export default function Main() {
               //   combatState[1] === 1
               //     ? "translate(-8%, 0%)"
               //     : "translate(-108%, 0%)",
-              top: combatState[1] === 1 ? "38%" : "65%",
+              bottom: combatState[1] === 1 ? "68%" : "20%",
               transition:
                 combatState[1] === 1
-                  ? "transform 0.5s ease-out, top 0.5s ease-in"
+                  ? "transform 0.5s ease-out, bottom 0.5s ease-in"
                   : "none",
             }}
           >
@@ -189,10 +229,10 @@ export default function Main() {
               //   combatState[1] === 2
               //     ? "translate(-92%, 0%)"
               //     : "translate(8%, 0%)",
-              top: combatState[1] === 2 ? "38%" : "65%",
+              bottom: combatState[1] === 2 ? "68%" : "20%",
               transition:
                 combatState[1] === 2
-                  ? "transform 0.5s ease-out, top 0.5s ease-in"
+                  ? "transform 0.5s ease-out, bottom 0.5s ease-in"
                   : "none",
             }}
           >

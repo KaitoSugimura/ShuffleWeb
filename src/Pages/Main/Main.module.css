@@ -1,7 +1,7 @@
 .comboCont {
   position: fixed;
-  top: 52%;
-  right: 7%;
+  top: 43%;
+  right: 10%;
 
   transform: translateY(-50%);
 
@@ -51,12 +51,41 @@
   color: red;
 }
 
+.skillButton{
+  position: fixed;
+  top: 46%;
+  left: 2%;
+  transform: translateY(-50%);
+  width: 20vw;
+  height: 4vw;
+  border: none;
+  background: linear-gradient(to right, #000000cf, #00000000);
+  color: white;
+  font-size: 1.6vw;
+  text-align: start;
+  padding-left: 2vw;
+  cursor: pointer;
+
+  border-left: white 0.3vw solid;
+}
+
+.skillButton:after{
+  content: "Active Skill:";
+  position: absolute;
+  top: -18%;
+  left: 3%;
+  font-size: 1vw;
+}
+
+.skillButton:hover{
+  background: linear-gradient(to right, #2a2a2acf, #00000000);
+}
+
 .leftBoxPos,
 .rightBoxPos {
   position: fixed;
-  top: 63%;
+  bottom: 37%;
   left: 50%;
-  transition: transform 0.5s ease-out, top 0.5s ease-in;
   z-index: 1;
 }
 .leftBoxPos {
@@ -69,8 +98,8 @@
 
 .leftCardBox,
 .rightCardBox {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   align-items: center;
   gap: 0.5vw;
   position: relative;
