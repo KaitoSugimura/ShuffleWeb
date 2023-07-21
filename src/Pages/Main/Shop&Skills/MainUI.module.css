@@ -19,26 +19,39 @@
   position: absolute;
   top: 5vh;
   right: 5vh;
+  text-align: end;
 }
 
 .GoldCont{
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  justify-content: end;
+  gap: 0.5vh;
 }
 
 .GoldImage {
-  width: 5rem;
-  height: 5rem;
-  margin-top: 0.5rem;
+  width: 5vh;
+  height: 5vh;
+  margin-top: 0.5vh;
   display: inline-block;
 }
 
 .GoldText {
-  font-size: 4.5rem;
+  font-size: 4.5vh;
   font-weight: 700;
   color: white;
   display: inline-block;
 
+}
+
+.activePassives{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+
+  margin-top: 2vh;
+
+  font-size: 1vw;
+  color: white;
 }

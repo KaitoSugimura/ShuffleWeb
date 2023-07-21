@@ -6,7 +6,8 @@ import { MainContext } from "../Main";
 import { SoundContext } from "../../../Context/SoundContext";
 
 export default function MainUI() {
-  const { currentGold, setDieAmount, setTrueVision } = useContext(MainContext);
+  const { currentGold, setDieAmount, setTrueVision, skillTurnsRemaining } =
+    useContext(MainContext);
   const { playSFX } = useContext(SoundContext);
 
   const [skill1Held, setSkill1Held] = useState(0);
@@ -20,8 +21,8 @@ export default function MainUI() {
 
   const skill2Active = () => {
     playSFX("Skill1");
-    setSkill2Held((prev) => prev - 1);
     setTrueVision();
+    setSkill2Held((prev) => prev - 1);
   };
 
   const SkillsList = [
@@ -33,6 +34,7 @@ export default function MainUI() {
         setSkill1Held((prev) => prev + 1);
       },
       active: skill1Active,
+      turnsLeft: skillTurnsRemaining[0],
     },
     {
       name: "True Vision",
@@ -42,6 +44,7 @@ export default function MainUI() {
         setSkill2Held((prev) => prev + 1);
       },
       active: skill2Active,
+      turnsLeft: skillTurnsRemaining[1],
     },
   ];
 
@@ -53,6 +56,13 @@ export default function MainUI() {
           <img src="/Images/Gold.png" className={styles.GoldImage}></img>
         </div>
         <Shop SkillsList={SkillsList} />
+        <div className={styles.activePassives}>
+          {SkillsList.map((skill, index) => (
+            <p className={styles.SkillTurnsLeft} key={index}>
+              {skill.name} - {skill.turnsLeft} turns
+            </p>
+          ))}
+        </div>
       </div>
       <Skills SkillsList={SkillsList} />
     </div>

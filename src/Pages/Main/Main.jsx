@@ -41,6 +41,8 @@ export default function Main() {
   const doubleDiceTurnsRemaining = useRef(0);
   const trueVisionTurnsRemaining = useRef(0);
 
+  const [x, force] = useState(0);
+
   // Initial set
   useEffect(() => {
     if (enemyRef.current) {
@@ -93,20 +95,20 @@ export default function Main() {
 
   const setDieAmount = useCallback(
     (amount) => {
+      doubleDiceTurnsRemaining.current += 1;
+      if (currentNumberOfCards.current === amount) return;
       currentNumberOfCards.current = amount;
-      doubleDiceTurnsRemaining.current = 1;
       if (combatState[0] === 1) {
         setCards(getNewSplitShuffleArrays());
       }
+      force(Date.now());
     },
     [combatState]
   );
 
   const setTrueVision = () => {
-    trueVisionTurnsRemaining.current = 3;
-    if (combatState[0] === 1) {
-      setCards((prev) => [...prev]);
-    }
+    trueVisionTurnsRemaining.current += 3;
+    force(Date.now());
   };
 
   const handleOnRollAttackClick = (event) => {
@@ -140,10 +142,12 @@ export default function Main() {
       enemyRef.current.takeDamage(Math.ceil(sum * getDamageMultiplier()));
     }, 500);
 
-    doubleDiceTurnsRemaining.current--;
+    doubleDiceTurnsRemaining.current -=
+      doubleDiceTurnsRemaining.current > 0 ? 1 : 0;
     currentNumberOfCards.current =
       doubleDiceTurnsRemaining.current > 0 ? 20 : 10;
-    trueVisionTurnsRemaining.current--;
+    trueVisionTurnsRemaining.current -=
+      trueVisionTurnsRemaining.current > 0 ? 1 : 0;
   };
 
   return (
@@ -153,6 +157,10 @@ export default function Main() {
         setTrueVision,
         currentGold: currentGoldAmount,
         addGold: addGoldAmount,
+        skillTurnsRemaining: [
+          doubleDiceTurnsRemaining.current,
+          trueVisionTurnsRemaining.current,
+        ],
       }}
     >
       <div className={styles.mainRoot}>
