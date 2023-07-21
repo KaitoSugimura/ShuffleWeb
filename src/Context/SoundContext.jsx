@@ -28,8 +28,6 @@ export const SoundContextProvider = ({ children }) => {
   const SFXRef = useRef(null);
   const currentTimeRef = useRef(0);
 
-  const startUp = useRef(true);
-
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
@@ -38,12 +36,6 @@ export const SoundContextProvider = ({ children }) => {
 
       if (volume == 0) audioRef.current.pause();
       else audioRef.current.play();
-
-      if (startUp.current) {
-        startUp.current = false;
-        playMusic("title");
-        return;
-      }
     }
   }, [volume]);
 
