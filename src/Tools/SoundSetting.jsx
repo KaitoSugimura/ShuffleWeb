@@ -1,6 +1,8 @@
 import React, { useContext, useRef } from "react";
 import styles from "./SoundSetting.module.css";
 import { SoundContext } from "../Context/SoundContext";
+import SoundOn from "/Sound/Sound.svg";
+import SoundOff from "/Sound/SoundOff.svg";
 
 
 export default function SoundSetting({ style }) {
@@ -23,7 +25,7 @@ export default function SoundSetting({ style }) {
         {volume == 0 ? (
           <img
             className={styles.SoundIcon}
-            src="/Sound/SoundOff.svg"
+            src={SoundOff}
             onDrag={(e) => {
               e.preventDefault();
             }}
@@ -31,7 +33,7 @@ export default function SoundSetting({ style }) {
         ) : (
           <img
             className={styles.SoundIcon}
-            src="/Sound/Sound.svg"
+            src={SoundOn}
             onDrag={(e) => {
               e.preventDefault();
             }}

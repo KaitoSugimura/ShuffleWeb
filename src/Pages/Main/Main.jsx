@@ -163,7 +163,7 @@ export default function Main() {
             style={{
               transform:
                 combatState[1] === 1
-                  ? "translate(-8%, 0%)"
+                  ? "translate(-68%, 0%)"
                   : "translate(-108%, 0%)",
               top: combatState[1] === 1 ? "38%" : "65%",
               transition:
@@ -187,7 +187,7 @@ export default function Main() {
             style={{
               transform:
                 combatState[1] === 2
-                  ? "translate(-92%, 0%)"
+                  ? "translate(-40%, 0%)"
                   : "translate(8%, 0%)",
               top: combatState[1] === 2 ? "38%" : "65%",
               transition:
