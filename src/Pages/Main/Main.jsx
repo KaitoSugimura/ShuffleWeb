@@ -17,6 +17,7 @@ import Enemy from "./Enemy/Enemy";
 import { SoundContext } from "../../Context/SoundContext";
 import ActionBar from "./ActionBar/ActionBar";
 import MainUI from "./Shop&Skills/MainUI";
+import TrueVision from "./SkillUI/TrueVision";
 
 export const MainContext = createContext();
 
@@ -38,6 +39,7 @@ export default function Main() {
     setCurrentGoldAmount((prev) => prev + a);
   };
   const doubleDiceTurnsRemaining = useRef(0);
+  const trueVisionTurnsRemaining = useRef(0);
 
   // Initial set
   useEffect(() => {
@@ -67,7 +69,7 @@ export default function Main() {
   const onEnemyDeath = () => {
     playSFX("Death");
     setTimeout(() => {
-      addGoldAmount(Slimes[currentSlimeIndexRef.current].reward)
+      addGoldAmount(Slimes[currentSlimeIndexRef.current].reward);
       currentSlimeIndexRef.current++;
       comboRef.current = 0;
       if (currentSlimeIndexRef.current >= Slimes.length) {
@@ -93,13 +95,19 @@ export default function Main() {
     (amount) => {
       currentNumberOfCards.current = amount;
       doubleDiceTurnsRemaining.current = 1;
-      console.log(combatState[0]);
       if (combatState[0] === 1) {
         setCards(getNewSplitShuffleArrays());
       }
     },
     [combatState]
   );
+
+  const setTrueVision = () => {
+    trueVisionTurnsRemaining.current = 3;
+    if (combatState[0] === 1) {
+      setCards((prev) => [...prev]);
+    }
+  };
 
   const handleOnRollAttackClick = (event) => {
     event.preventDefault();
@@ -111,10 +119,9 @@ export default function Main() {
   const handleOnActionBarSelectionClick = (event, i) => {
     event.preventDefault();
     iRef.current = i;
-    let sum = 0;
-    cards[i].forEach((card) => {
-      sum += card;
-    });
+
+    let sum = cards[i].reduce((a, b) => a + b, 0);
+
     if (
       sum >=
       Math.ceil(
@@ -136,12 +143,14 @@ export default function Main() {
     doubleDiceTurnsRemaining.current--;
     currentNumberOfCards.current =
       doubleDiceTurnsRemaining.current > 0 ? 20 : 10;
+    trueVisionTurnsRemaining.current--;
   };
 
   return (
     <MainContext.Provider
       value={{
         setDieAmount,
+        setTrueVision,
         currentGold: currentGoldAmount,
         addGold: addGoldAmount,
       }}
@@ -190,6 +199,9 @@ export default function Main() {
                     : "none",
               }}
             >
+              {trueVisionTurnsRemaining.current > 0 && (
+                <TrueVision cards={cards[0]} hidden={combatState[1] === 1} />
+              )}
               {cards[0].map((card, index) => (
                 <Card
                   key={index}
@@ -212,6 +224,9 @@ export default function Main() {
                     : "none",
               }}
             >
+              {trueVisionTurnsRemaining.current > 0 && (
+                <TrueVision cards={cards[1]} hidden={combatState[1] === 2} />
+              )}
               {cards[1].map((card, index) => (
                 <Card
                   key={index}

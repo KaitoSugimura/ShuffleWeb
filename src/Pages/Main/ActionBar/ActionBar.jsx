@@ -7,7 +7,7 @@ export default function ActionBar({
 }) {
   return (
     <>
-      {ActionCombatState ? (
+      {ActionCombatState === 1 && (
         <div className={styles.bottomCenter}>
           <button
             className={styles.selectionButton}
@@ -26,7 +26,8 @@ export default function ActionBar({
             Right
           </button>
         </div>
-      ) : (
+      )}
+      {ActionCombatState === 0 && (
         <button
           className={`${styles.bottomCenter} ${styles.selectionButton}`}
           onClick={(event) => {

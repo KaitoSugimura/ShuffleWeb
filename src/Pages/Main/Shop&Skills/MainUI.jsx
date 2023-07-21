@@ -6,7 +6,7 @@ import { MainContext } from "../Main";
 import { SoundContext } from "../../../Context/SoundContext";
 
 export default function MainUI() {
-  const { currentGold, setDieAmount } = useContext(MainContext);
+  const { currentGold, setDieAmount, setTrueVision } = useContext(MainContext);
   const { playSFX } = useContext(SoundContext);
 
   const [skill1Held, setSkill1Held] = useState(0);
@@ -19,7 +19,9 @@ export default function MainUI() {
   };
 
   const skill2Active = () => {
+    playSFX("Skill1");
     setSkill2Held((prev) => prev - 1);
+    setTrueVision();
   };
 
   const SkillsList = [
