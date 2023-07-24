@@ -12,7 +12,7 @@ import Card from "./Card";
 import Background from "./Graphics/Background";
 import SoundSetting from "../../Tools/SoundSetting";
 import { GameContext } from "../../GameContext";
-import Slimes from "./Data/SlimeLineup";
+import MapLineup from "./Data/MapLineup";
 import Enemy from "./Enemy/Enemy";
 import { SoundContext } from "../../Context/SoundContext";
 import ActionBar from "./ActionBar/ActionBar";
@@ -26,6 +26,9 @@ export default function Main() {
   const { setGameState } = useContext(GameContext);
   const enemyRef = useRef(null);
 
+  const [Slimes, setSlimes] = useState(MapLineup[0].Slimes);
+  const [moveRoomAnim, setMoveRoomAnim] = useState(false);
+
   const [cards, setCards] = useState(null);
   const [combatState, setCombatState] = useState([0, 0]); // Switch to using Enum later
   const iRef = useRef(0);
@@ -33,6 +36,8 @@ export default function Main() {
   const currentSlimeIndexRef = useRef(0);
   const currentNumberOfCards = useRef(10);
   const comboRef = useRef(0);
+
+  const currentMapLineupIndexRef = useRef(0);
 
   const [currentGoldAmount, setCurrentGoldAmount] = useState(100);
   const addGoldAmount = (a) => {
@@ -68,6 +73,20 @@ export default function Main() {
     return comboRef.current;
   };
 
+  const resetEnemy = () => {
+    setCards(null);
+    enemyRef.current.setEnemy(
+      Slimes[currentSlimeIndexRef.current].image,
+      Slimes[currentSlimeIndexRef.current].name,
+      Slimes[currentSlimeIndexRef.current].health
+    );
+    setCombatState([0, 0]);
+  };
+
+  useEffect(() => {
+    resetEnemy();
+  }, [Slimes]);
+
   const onEnemyDeath = () => {
     playSFX("Death");
     setTimeout(() => {
@@ -75,15 +94,20 @@ export default function Main() {
       currentSlimeIndexRef.current++;
       comboRef.current = 0;
       if (currentSlimeIndexRef.current >= Slimes.length) {
-        setGameState("end");
+        playSFX("Steps");
+        setMoveRoomAnim(true);
+        setTimeout(() => {
+          currentMapLineupIndexRef.current++;
+          if (currentMapLineupIndexRef.current >= MapLineup.length) {
+            setGameState("end");
+            return;
+          }
+          currentSlimeIndexRef.current = 0;
+          setMoveRoomAnim(false);
+          setSlimes(MapLineup[currentMapLineupIndexRef.current].Slimes);
+        }, 1000);
       } else {
-        setCards(null);
-        enemyRef.current.setEnemy(
-          Slimes[currentSlimeIndexRef.current].image,
-          Slimes[currentSlimeIndexRef.current].name,
-          Slimes[currentSlimeIndexRef.current].health
-        );
-        setCombatState([0, 0]);
+        resetEnemy();
       }
     }, 1000);
   };
@@ -171,7 +195,11 @@ export default function Main() {
           }}
         />
 
-        <Background />
+        <div className={moveRoomAnim ? styles.moveRoomAnim : null}>
+          <Background
+            src={MapLineup[currentMapLineupIndexRef.current].Background}
+          />
+        </div>
         <MainUI />
 
         <Enemy

@@ -10,6 +10,7 @@ import Death from "/Sound/SFX/Death.mp3";
 import Roll from "/Sound/SFX/Roll.mp3";
 import PowerUp from "/Sound/SFX/PowerUp.mp3";
 import Skill1 from "/Sound/SFX/Skill1.mp3";
+import Steps from "/Sound/SFX/Steps.mp3";
 
 const soundList = {
   Select: Select,
@@ -18,6 +19,7 @@ const soundList = {
   Roll: Roll,
   PowerUp: PowerUp,
   Skill1: Skill1,
+  Steps: Steps,
 };
 
 export const SoundContext = createContext();

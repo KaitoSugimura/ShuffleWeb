@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./Background.module.css";
-import settingBG from "/Images/BackgroundField.jpg";
 
-export default function Background() {
+export default function Background({src}) {
   const [tiltValues, setTiltValues] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export default function Background() {
       <div
         className={styles.Background}
         style={{
-          backgroundImage: `url(${settingBG})`,
+          backgroundImage: `url(${src})`,
           transform: `rotateX(${tiltValues.y}deg) rotateY(${tiltValues.x}deg)`,
         }}
       ></div>

@@ -4,6 +4,7 @@ import Shop from "./Shop";
 import { useCallback, useContext, useRef, useState } from "react";
 import { MainContext } from "../Main";
 import { SoundContext } from "../../../Context/SoundContext";
+import goldCoin from "/Images/GoldCoin.png";
 
 export default function MainUI() {
   const { currentGold, setDieAmount, setTrueVision, skillTurnsRemaining } =
@@ -28,7 +29,7 @@ export default function MainUI() {
   const SkillsList = [
     {
       name: "Double Dice",
-      cost: "100",
+      cost: "150",
       held: skill1Held,
       buy: () => {
         setSkill1Held((prev) => prev + 1);
@@ -38,7 +39,7 @@ export default function MainUI() {
     },
     {
       name: "True Vision",
-      cost: "25",
+      cost: "100",
       held: skill2Held,
       buy: () => {
         setSkill2Held((prev) => prev + 1);
@@ -53,7 +54,7 @@ export default function MainUI() {
       <div className={styles.BarCont}>
         <div className={styles.GoldCont}>
           <p className={styles.GoldText}>{currentGold}</p>
-          <img src="/Images/Gold.png" className={styles.GoldImage}></img>
+          <img src={goldCoin} className={styles.GoldImage}></img>
         </div>
         <Shop SkillsList={SkillsList} />
         <div className={styles.activePassives}>

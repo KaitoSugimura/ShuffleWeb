@@ -84,3 +84,64 @@
   gap: 0.5vw;
   position: relative;
 } */
+
+
+.moveRoomAnim{
+  animation: moveRoom 1s ease-out 0s forwards;
+  position: absolute;
+  top:0;
+  left:0;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+}
+
+@keyframes moveRoom{
+  0%{
+    transform: scale(1);
+    top: 0;
+  }
+  10%{
+    top: 1vh;
+  }
+  20%{
+    top: 0;
+  }
+  30%{
+    top: 1vh;
+  }
+  40%{
+    top: 0;
+  }
+  50%{
+    top: 1vh;
+  }
+  60%{
+    top: 0;
+  } 
+  70%{
+    top: 1vh;
+  }
+  80%{
+    top: 0;
+  }
+  100%{
+    transform: scale(2);
+  }
+}
+
+.moveRoomAnim div{
+  animation: fadeOut 1s ease-out 0s forwards;
+}
+
+@keyframes fadeOut{
+  0%{
+    opacity: 1;
+  }
+  30%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0.3;
+  }
+}
