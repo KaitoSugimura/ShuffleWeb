@@ -26,8 +26,8 @@
   height: 50rem;
   transform: translate(-50%, -50%);
 
-  background-color: rgb(255, 255, 255);
-  border: 1rem black solid;
+  background-color: rgba(255, 255, 255, 0);
+  border: 0.2rem black solid;
 
   pointer-events: all;
 }
@@ -36,11 +36,11 @@
   position: absolute;
   top: -1rem;
   right: -1rem;
-  width: 5rem;
-  height: 5rem;
-  font-size: 3.5rem;
+  width: 4rem;
+  height: 4rem;
+  font-size: 3rem;
   text-align: center;
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.905);
   cursor: pointer;
 
   z-index: 101;

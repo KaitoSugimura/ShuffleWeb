@@ -5,7 +5,6 @@
   border: none;
   margin: 2vh 0 0 auto;
 
-
   pointer-events: all;
 }
 
@@ -29,22 +28,43 @@
   left: 0;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.602);
+}
 
+.ShopCont h1{
+  color: white;
+  font-size: 3.5rem;
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.ShopItems{
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  margin-top: 3rem;
 }
 
 .BuySkillbutton{
-  width: 90%;
+  width: 42%;
+  height: 30rem;
   border: none;
   cursor: pointer;
   background-color: aliceblue;
   border: rgba(0, 0, 0, 0.51) solid 0.2vw;
-  margin: 1vw;
-  padding: 2vw;
-  font-size: 1.5vw;
+  margin: 2rem;
+  padding: 4rem;
+  font-size: 2.5rem;
   text-align: center;
   pointer-events: all;
+}
+
+.goldAmount{
+  margin-top: 4rem;
+}
+
+.Description{
+  margin-top: 3rem;
+  font-size: 1.8rem;
+  text-align: start;
 }

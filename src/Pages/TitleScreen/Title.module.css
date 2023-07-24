@@ -1,4 +1,12 @@
+.modalRoot{
+  width: 100%;
+  height: 100%;
+  background-color: white;
 
+  position: relative;
+
+  overflow: hidden;
+}
 
 .descTitle {
   font-size: 4rem;

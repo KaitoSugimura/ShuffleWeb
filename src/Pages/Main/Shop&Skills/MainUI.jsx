@@ -36,6 +36,7 @@ export default function MainUI() {
       },
       active: skill1Active,
       turnsLeft: skillTurnsRemaining[0],
+      description: "Double the amount of dice you roll for 1 turn. The numbers rolled will be from 1 - 20.",
     },
     {
       name: "True Vision",
@@ -46,6 +47,7 @@ export default function MainUI() {
       },
       active: skill2Active,
       turnsLeft: skillTurnsRemaining[1],
+      description: "See the sum of your dice rolls for 3 turns.",
     },
   ];
 
