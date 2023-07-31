@@ -187,27 +187,30 @@ export default function Main() {
         ],
       }}
     >
+      {/* ROOT */}
       <div className={styles.mainRoot}>
+        {/* Sound bar */}
         <SoundSetting
           style={{
             top: `5vh`,
             left: `5vh`,
           }}
         />
-
+        {/* Moving background */}
         <div className={moveRoomAnim ? styles.moveRoomAnim : null}>
           <Background
             src={MapLineup[currentMapLineupIndexRef.current].Background}
           />
         </div>
+        {/* MainUI */}
         <MainUI />
-
+        {/* Enemy (Includes HP bar and name) */}
         <Enemy
           ref={enemyRef}
           onEnemyDeath={onEnemyDeath}
           enemyOnTakeDamage={enemyOnTakeDamage}
         />
-
+        {/* Combo text */}
         {comboRef.current > 0 && (
           <div className={styles.comboCont}>
             <p className={styles.comboText}>
@@ -219,6 +222,7 @@ export default function Main() {
           </div>
         )}
 
+        {/* All cards */}
         {cards && (
           <>
             <div
@@ -274,6 +278,7 @@ export default function Main() {
           </>
         )}
 
+        {/* Bottom buttons */}
         <ActionBar
           ActionCombatState={combatState[0]}
           handleOnRollAttackClick={handleOnRollAttackClick}

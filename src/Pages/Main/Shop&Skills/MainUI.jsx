@@ -31,20 +31,17 @@ export default function MainUI() {
       name: "Double Dice",
       cost: "150",
       held: skill1Held,
-      buy: () => {
-        setSkill1Held((prev) => prev + 1);
-      },
+      buy: () => setSkill1Held((prev) => prev + 1),
       active: skill1Active,
       turnsLeft: skillTurnsRemaining[0],
-      description: "Double the amount of dice you roll for 1 turn. The numbers rolled will be from 1 - 20.",
+      description:
+        "Double the amount of dice you roll for 1 turn. The numbers rolled will be from 1 - 20.",
     },
     {
       name: "True Vision",
       cost: "100",
       held: skill2Held,
-      buy: () => {
-        setSkill2Held((prev) => prev + 1);
-      },
+      buy: () => setSkill2Held((prev) => prev + 1),
       active: skill2Active,
       turnsLeft: skillTurnsRemaining[1],
       description: "See the sum of your dice rolls for 3 turns.",

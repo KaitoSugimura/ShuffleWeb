@@ -64,6 +64,7 @@
   background: linear-gradient(to top,rgb(220, 36, 15), rgb(191, 27, 9) 40%, rgb(220, 36, 15));
   border-radius: 0.2vw;
   background-clip: padding-box;
+  transition: width 0.5s ease-out;
 }
 
 .damageCont {

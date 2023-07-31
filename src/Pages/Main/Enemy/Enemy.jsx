@@ -9,11 +9,11 @@ import styles from "./Enemy.module.css";
 
 const Enemy = forwardRef((props, ref) => {
   const { onEnemyDeath, enemyOnTakeDamage } = props;
-  const [enemyMaxHealth, setEnemyMaxHealth] = useState(9999999);
+  const [enemyMaxHealth, setEnemyMaxHealth] = useState(99999);
   const [enemyCurrentHealth, setEnemyCurrentHealth] = useState(enemyMaxHealth);
   const [damageInfo, setDamageInfo] = useState(null);
   const nameRef = useRef("MISSINGNO."); // :)
-  const imageRef = useRef("");
+  const imageRef = useRef("/Enemies/Missingno.webp");
 
   useImperativeHandle(ref, () => ({
     setEnemy(image, name, maxHealth) {
@@ -70,7 +70,6 @@ const Enemy = forwardRef((props, ref) => {
                 (enemyCurrentHealth / enemyMaxHealth) * 100,
                 0
               )}%`,
-              transition: "width 0.5s ease-out",
             }}
           ></div>
         </div>

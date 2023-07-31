@@ -14,20 +14,24 @@ export default function Title() {
       {showModal && (
         <LazyModel setShowModal={setShowModal}>
           <div className={styles.modalRoot}>
-            <p className={styles.descTitle}>How To Play</p>
-            <p className={styles.desc}>
-              1. Start by pressing the Roll Attack button.
-              <br />
-              2. This will roll 10 numbers from 1 to 10 in random order.
-              <br />
-              3. These numbers will be split in 2, left and right groups.
-              <br />
-              4. You will deal damage equal to the total sum of the group.
-              <br />
-              5. Picking the larger group consecutively will deal bonus damage!
-              <br />
-              6. Defeat the enemy by reducing its health to 0.
-            </p>
+            <h2 className={styles.descTitle}>How To Play</h2>
+            <ul className={styles.desc}>
+              <li>1. Start by pressing the Roll Attack button.</li>
+              <li>
+                2. This will roll 10 numbers from 1 to 10 in random order.
+              </li>
+              <li>
+                3. These numbers will be split in 2, left and right groups.
+              </li>
+              <li>
+                4. You will deal damage equal to the total sum of the group.
+              </li>
+              <li>
+                5. Picking the larger group consecutively will deal bonus
+                damage!
+              </li>
+              <li>6. Defeat the enemy by reducing its health to 0.</li>
+            </ul>
           </div>
         </LazyModel>
       )}
